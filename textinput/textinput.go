@@ -147,6 +147,8 @@ type Model struct {
 	// Should the input suggest to complete
 	ShowSuggestions bool
 
+	SyntaxHighlighter func(s string) string
+
 	// suggestions is a list of suggestions that may be used to complete the
 	// input.
 	suggestions            [][]rune
@@ -656,6 +658,9 @@ func (m Model) View() string {
 	}
 
 	styleText := m.TextStyle.Inline(true).Render
+	if m.SyntaxHighlighter != nil {
+		styleText = func(strs ...string) string { return m.SyntaxHighlighter(strings.Join(strs, " ")) }
+	}
 
 	value := m.value[m.offset:m.offsetRight]
 	pos := max(0, m.pos-m.offset)
