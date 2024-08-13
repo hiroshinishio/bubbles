@@ -563,6 +563,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			m.value = append(m.value, m.matchedSuggestions[m.currentSuggestionIndex][len(m.value):]...)
 			m.CursorEnd()
 		}
+		return m, nil
 	}
 
 	// Let's remember where the position of the cursor currently is so that if
